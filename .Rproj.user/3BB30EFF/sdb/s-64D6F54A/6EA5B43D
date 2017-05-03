@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\nstr(\"start initializing...\")\nlistfiles <- system(\"cmd.exe\", input = \"dir /a /b /s D:\\\\500_files_proj\\\\data\", intern = TRUE)\nlibrary(jpeg)\ndatalist <- lapply(7:length(listfiles)-2, function(index){readJPEG(listfiles[index])})\ndatalist1 <- lapply(datalist, function(d) d[,,1])\ngetImageMatrix <- function(v=1:500) t(do.call(cbind, datalist1[v]));\n#myshowimgs <- function(v=1:500) image(do.call(cbind, datalist1[v]))\n\nlibrary(GA)\n\nimagecompare <- function(i1, i2){ i1<- datalist[[i1]]; i2<- datalist[[i2]]; sum((i1[,dim(i1)[2],1] - i2[,1,1])^2) }\nm0 <- outer(1:500,1:500, FUN = Vectorize(imagecompare))\noptim.FUN<-function(v){mm<-m0[v,v]; -(sum(mm[tr.upp]*mw)+1000/sum(mm[tr.down]))}\n\nlibrary(parallel)\nlibrary(doRNG)\n\ntr.upp<-col(m0)>row(m0)\ntr.down<-col(m0)<row(m0)\nmw<-(1/((col(m0)-row(m0))^2))[tr.upp]\n\n#str(\"run 1 iteration...\")\n\n#g<-gaisl(type = \"permutation\", fitness = optim.FUN, min = 1, max = 500, popSize = 5000, maxiter = 1, parallel = TRUE, migrationInterval = 5, numIslands = 4, suggestions = tryCatch(g@solution, error = function(e) NULL))\n\nstr(\"initialized...\")\n\n#myshowimgs();\noutfile <- tempfile('temp.png')\npng(outfile, width=600, height=500)\n\n#canHandleEvents <- TRUE;\n\nshinyServer(function(input, output) {\n\n  observeEvent(input$my_button, {\n   str(\"click handled\");\n   #g<-gaisl(type = \"permutation\", fitness = optim.FUN, min = 1, max = 500, popSize = 5000, maxiter = 1, parallel = TRUE, migrationInterval = 5, numIslands = 4, suggestions = tryCatch(g@solution, error = function(e) NULL))\n    \n  })\n  \n  output$full_image <- renderImage({\n    \n    return(list(\n      src = outfile, #\"Rplot.png\",\n      contentType = \"image/png\",\n      alt = \"Face\",\n      #width = 500,\n      height = 500\n    ))\n  }, deleteFile = FALSE)\n  \n})",
+    "created" : 1493215329931.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3439904567",
+    "id" : "6EA5B43D",
+    "lastKnownWriteTime" : 1493828641,
+    "last_content_update" : 1493828641039,
+    "path" : "D:/r_shiny/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

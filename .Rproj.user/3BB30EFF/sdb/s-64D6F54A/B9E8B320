@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "shinyUI(bootstrapPage(\n\n  plotOutput(outputId = \"full_image\", height = \"500px\"),\n  sliderInput(inputId = \"iterations_count\",\n              label = \"Количество итераций:\",\n              min = 1, max = 10, value = 1, step = 1),\n  actionButton(inputId = \"my_button\", label = \"Click me\"),\n  \n  \n  selectInput(inputId = \"n_breaks\",\n      label = \"Number of bins in histogram (approximate):\",\n      choices = c(10, 20, 35, 50),\n      selected = 20),\n\n  checkboxInput(inputId = \"individual_obs\",\n      label = strong(\"Show individual observations\"),\n      value = FALSE),\n\n  checkboxInput(inputId = \"density\",\n      label = strong(\"Show density estimate\"),\n      value = FALSE),\n\n  plotOutput(outputId = \"main_plot\", height = \"300px\"),\n\n  # Display this only if the density is shown\n  conditionalPanel(condition = \"input.density == true\",\n    sliderInput(inputId = \"bw_adjust\",\n        label = \"Bandwidth adjustment:\",\n        min = 0.2, max = 2, value = 1, step = 0.2)\n  ),\n  \n  radioButtons(\"colorSelect\", \"Color:\",\n               c(\"Red\" = \"red\",\n                 \"Green\" = \"green\",\n                 \"Blue\" = \"blue\")\n               ),\n  sliderInput(inputId = \"mySliderInput\",\n              label = \"Test:\",\n              min = 0.2, max = 2, value = 1, step = 0.2)\n)\n\n)",
+    "created" : 1493215332363.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3085275963",
+    "id" : "B9E8B320",
+    "lastKnownWriteTime" : 1493826103,
+    "last_content_update" : 1493826103290,
+    "path" : "D:/r_shiny/UI.R",
+    "project_path" : "UI.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
